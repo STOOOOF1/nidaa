@@ -1,0 +1,6 @@
+{
+  "appId": "app.voiceschool.nidaa",
+  "appName": "نداء الطلاب",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>شاشة البث — نداء الطلاب</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- الإعداد الأول -->
+<main id="setup" class="wrap" hidden>
+  <header class="top">
+    <div class="logo">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 9a4 4 0 0 1 0 6"/><path d="M18 6a8 8 0 0 1 0 12"/></svg>
+    </div>
+    <h1>شاشة البث</h1>
+    <p class="muted">للحارس وإدارة المدرسة</p>
+  </header>
+  <div id="noconfig" class="banner bad" hidden>النظام لم يُربط بقاعدة البيانات بعد.</div>
+
+  <section class="card">
+    <h2>إنشاء نقطة نداء جديدة</h2>
+    <p class="muted">افتح هذه الصفحة وأنت داخل المدرسة ليُحفظ موقعها تلقائيًا.</p>
+    <label for="newPin">رقم سري للإدارة (4 خانات على الأقل)</label>
+    <input id="newPin" type="password" inputmode="numeric" maxlength="32" autocomplete="new-password">
+    <button id="createBtn" class="btn primary">إنشاء</button>
+  </section>
+
+  <section class="card">
+    <h2>لدي نقطة نداء</h2>
+    <label for="inCode">رمز النداء</label>
+    <input id="inCode" class="codeIn" type="text" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="------">
+    <label for="inPin">الرقم السري</label>
+    <input id="inPin" type="password" inputmode="numeric" maxlength="32" autocomplete="off">
+    <button id="loginBtn" class="btn">دخول</button>
+  </section>
+  <a class="link" href="index.html">أنا ولي أمر — صفحة النداء</a>
+</main>
+
+<!-- البث -->
+<main id="live" class="st" hidden>
+  <header class="st-head">
+    <h1>نداء الطلاب — شاشة البث</h1>
+    <span id="offline" class="off" hidden>لا يوجد اتصال</span>
+    <span id="pill" class="pill closed">…</span>
+    <button id="settingsBtn" class="btn sm">الإعدادات</button>
+  </header>
+
+  <div class="grid">
+    <section class="card qr center">
+      <h2>امسح الرمز لتنادي ابنك</h2>
+      <div id="qr"></div>
+      <div id="codeTxt" class="bigcode"></div>
+      <div id="urlTxt" class="url"></div>
+      <div class="row noprint">
+        <button id="shareBtn" class="btn">مشاركة الرابط</button>
+        <button id="printBtn" class="btn">طباعة</button>
+      </div>
+    </section>
+
+    <div>
+      <section id="nowCard" class="card now">
+        <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
+        <div id="nowTxt" class="big">بانتظار النداءات</div>
+        <div id="qCount" class="muted qcount">لا يوجد نداءات في الطابور</div>
+      </section>
+
+      <section class="card">
+        <div class="row">
+          <button id="pauseBtn" class="btn" style="margin-top:0">إيقاف مؤقت</button>
+          <button id="skipBtn" class="btn danger" style="margin-top:0" disabled>تخطي النداء الحالي</button>
+        </div>
+        <label for="vol">مستوى الصوت</label>
+        <input id="vol" type="range" min="20" max="250" step="5" value="100">
+        <div class="row">
+          <button id="testBtn" class="btn">تجربة السماعة</button>
+          <button id="chimeBtn" class="btn">نغمة التنبيه: مفعّلة</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>آخر النداءات</h2>
+        <ul id="recent" class="list"><li class="muted">لا يوجد نداءات بعد</li></ul>
+        <button id="unblockBtn" class="btn sm" hidden style="margin-top:10px">إلغاء حظر الأجهزة</button>
+      </section>
+    </div>
+  </div>
+
+  <div id="unlock" class="overlay">
+    <div class="card">
+      <h2>جاهز للبث؟</h2>
+      <ul>
+        <li>صِل الجهاز بالسماعة (AUX أو Type‑C أو بلوتوث) وارفع الصوت.</li>
+        <li>أبقِ هذه الصفحة مفتوحة والشاشة مضاءة طوال وقت الخروج.</li>
+      </ul>
+      <button id="startBtn" class="btn primary">بدء البث</button>
+    </div>
+  </div>
+</main>
+
+<!-- الإعدادات -->
+<dialog id="dlg">
+  <div class="in">
+    <div id="pinStep">
+      <h2>إعدادات الإدارة</h2>
+      <label for="admPin">الرقم السري</label>
+      <input id="admPin" type="password" inputmode="numeric" maxlength="32" autocomplete="off">
+      <button id="admGo" class="btn primary">متابعة</button>
+      <button class="btn dlgClose">إغلاق</button>
+    </div>
+
+    <div id="setStep" hidden>
+      <h2>إعدادات الإدارة</h2>
+
+      <label>حالة النداء</label>
+      <div class="seg">
+        <label><input type="radio" name="mode" value="auto">حسب الجدول</label>
+        <label><input type="radio" name="mode" value="open">مفتوح الآن</label>
+        <label><input type="radio" name="mode" value="closed">مغلق</label>
+      </div>
+
+      <label>أوقات النداء (وقت الخروج)</label>
+      <div id="wins"></div>
+      <button id="addWin" class="btn sm" style="margin-top:8px">+ إضافة وقت</button>
+
+      <label>موقع المدرسة</label>
+      <p id="locTxt" class="muted"></p>
+      <button id="locBtn" class="btn sm">تحديد الموقع من هذا الجهاز</button>
+      <div class="row" style="margin-top:8px">
+        <input id="lat" type="number" step="any" placeholder="خط العرض" dir="ltr">
+        <input id="lng" type="number" step="any" placeholder="خط الطول" dir="ltr">
+      </div>
+
+      <label for="radius">نطاق النداء حول المدرسة: <span id="radiusTxt"></span></label>
+      <input id="radius" type="range" min="100" max="2000" step="100">
+
+      <label for="pinNew">تغيير الرقم السري (اختياري)</label>
+      <input id="pinNew" type="password" inputmode="numeric" maxlength="32" autocomplete="new-password">
+
+      <button id="saveBtn" class="btn primary">حفظ</button>
+      <div class="row">
+        <button class="btn dlgClose">إغلاق</button>
+        <button id="logoutBtn" class="btn danger">فصل هذا الجهاز</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<div id="toast" class="toast" hidden></div>
+<script src="config.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="api.js"></script>
+<script src="station.js"></script>
+</body>
+</html>

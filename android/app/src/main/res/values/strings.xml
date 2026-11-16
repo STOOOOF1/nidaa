@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">نداء الطلاب</string>
+    <string name="title_activity_main">نداء الطلاب</string>
+    <string name="package_name">app.voiceschool.nidaa</string>
+    <string name="custom_url_scheme">app.voiceschool.nidaa</string>
+</resources>
