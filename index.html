@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>نداء الطلاب</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div class="logo">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 9a4 4 0 0 1 0 6"/><path d="M18 6a8 8 0 0 1 0 12"/></svg>
+    </div>
+    <h1>نداء الطلاب</h1>
+    <p class="muted">نادِ ابنك بصوتك عند وصولك للمدرسة</p>
+  </header>
+
+  <div id="noconfig" class="banner bad" hidden>النظام لم يُربط بقاعدة البيانات بعد.</div>
+
+  <!-- إدخال الرمز -->
+  <section id="join" class="card" hidden>
+    <h2>أدخل رمز النداء</h2>
+    <p class="muted">الرمز مكتوب تحت رمز QR عند حارس المدرسة.</p>
+    <label for="codeInput">رمز النداء</label>
+    <input id="codeInput" class="codeIn" type="text" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="------">
+    <button id="joinBtn" class="btn primary">دخول</button>
+    <button id="scanBtn" class="btn" hidden>مسح رمز QR بالكاميرا</button>
+    <video id="scanVideo" playsinline muted hidden style="width:100%;border-radius:14px;margin-top:10px"></video>
+    <a class="link" href="station.html">أنا حارس المدرسة — فتح شاشة البث</a>
+  </section>
+
+  <!-- النداء -->
+  <section id="main" hidden>
+    <div id="banner" class="banner"></div>
+
+    <div id="lastCard" class="card" hidden>
+      <h2>نداؤك الأخير</h2>
+      <p id="lastStatus" class="status"></p>
+      <div id="lastPlayer" class="player" hidden>
+        <button class="pbtn" aria-label="استماع">
+          <svg class="i-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="i-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <div class="pbar"><div class="pfill"></div></div>
+        <span class="ptime">0:00</span>
+      </div>
+      <button id="repeatBtn" class="btn primary">كرّر النداء</button>
+    </div>
+
+    <div id="recCard" class="card center">
+      <h2 id="recTitle">سجّل نداءك</h2>
+      <p id="recHint" class="muted">اضغط الميكروفون وقل اسم ابنك بوضوح (10 ثوانٍ كحد أقصى)</p>
+
+      <div id="recStage">
+        <button id="micBtn" class="mic" aria-label="تسجيل">
+          <svg id="micIcon" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+          <svg id="stopIcon" width="44" height="44" viewBox="0 0 24 24" fill="currentColor" hidden><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+        </button>
+        <div id="timer" class="timer" hidden>0:00 / 0:10</div>
+      </div>
+
+      <div id="previewStage" hidden>
+        <p class="muted">استمع لتسجيلك قبل الإرسال</p>
+        <div id="prevPlayer" class="player">
+          <button class="pbtn" aria-label="استماع">
+            <svg class="i-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="i-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+          <div class="pbar"><div class="pfill"></div></div>
+          <span class="ptime">0:00</span>
+        </div>
+        <button id="sendBtn" class="btn primary">إرسال النداء</button>
+        <button id="redoBtn" class="btn">إعادة التسجيل</button>
+      </div>
+    </div>
+
+    <p class="muted center">يعمل النداء في محيط المدرسة فقط، وتُحذف التسجيلات تلقائيًا بعد ساعتين.</p>
+    <a id="changeCode" class="link" href="index.html">تغيير رمز النداء</a>
+  </section>
+</main>
+<div id="toast" class="toast" hidden></div>
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="parent.js"></script>
+</body>
+</html>
